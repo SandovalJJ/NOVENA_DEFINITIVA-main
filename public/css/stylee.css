@@ -1,0 +1,98 @@
+/* big credit for the design: https://codepen.io/1isten/pen/wvMdNPp */
+
+body {
+    background: rgb(36,0,0);
+    background: radial-gradient(circle, rgba(36,0,0,1) 0%, rgba(95,6,6,1) 0%, rgba(105,7,7,1) 10%, rgba(109,7,7,1) 14%, rgba(121,9,9,1) 27%, rgba(145,53,53,1) 44%, rgba(176,110,110,1) 57%, rgba(200,154,154,1) 70%, rgba(222,194,194,1) 82%, rgba(255,255,255,0.9430365896358543) 100%);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.slotcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.slot {
+    width: 150px; /* 50% más ancho */
+    height: 225px; /* 50% más alto */
+    border: 1px solid black;
+    border-radius: 7.5px;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    background: #fafafa;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.4) inset;
+}
+
+.slot .symbols {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: top 5s;
+}
+
+.slot .symbol {
+    width: 150px; /* Nuevo ancho */
+    height: 225px; /* Nuevo alto */
+    font-size: 90px; /* Ajustado para el nuevo tamaño */
+    line-height: 150px; /* Ajustado para el nuevo tamaño */
+    display: block;
+    text-align: center;
+    padding-top: 37.5px; /* Ajustado para el nuevo tamaño */
+}
+
+button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.winners-container {
+    width: 200px;
+    margin-left: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid red;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-image: url('path_to_your_canadian_or_christmas_theme_image');
+    background-size: cover;
+}
+
+.winners-container h2 {
+    text-align: center;
+    color: red;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 10px;
+}
+
+#winnersList {
+    list-style: none;
+    padding: 0;
+}
+
+#winnersList li {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
