@@ -11,7 +11,8 @@ class Participante extends Model
 
     protected $fillable = [
         'cedula',
-        'nombre',
+        'p_nombre',
+        's_nombre',
         'p_apellidio',
         's_apellido',
         'f_nacimiento',

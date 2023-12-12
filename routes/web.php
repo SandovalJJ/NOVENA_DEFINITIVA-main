@@ -42,3 +42,6 @@ Route::get('/obtener-pistas/{cedula}', [PistaController::class, 'obtenerPistasGe
 Route::post('/ruta-para-verificar-cedula', [PistaController::class, 'verificarCedula']);
 
 Route::get('/conteo-pistas-reveladas/{cedula}', [PistaController::class, 'conteoPistasReveladas']);
+
+Route::get('/obtener-ganador/{cedula}', [PistaController::class, 'obtenerGanador']);
+

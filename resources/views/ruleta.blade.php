@@ -231,8 +231,12 @@
                 </div>
     <div style="display: flex;">
         <button style="margin: auto " type="button" class="canada-theme-button mt-3" data-bs-toggle="modal" data-bs-target="#modalCedula">
-            Confirmar Ganador
+            ¿GANADOR?
         </button>
+        <button style="margin: auto" type="button" class="canada-theme-button mt-3" id="botonGanador">
+            GANADOR
+        </button>
+        
     </div>
             {{-- En algún lugar de tu vista donde quieras mostrar el conteo --}}
 <p id="pistasReveladas" style="font-size: 50px; font-weight: bolder" class="mt-5">Pistas reveladas: <span id="conteoPistas">0</span></p>
@@ -295,18 +299,33 @@
 <div class="modal" id="modalCedulaValida" tabindex="-1" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-body">
-            <p>¡FELICITACIONES! 🏆</p>
-            <p id="nombreParticipante".></p>
+            <p>¡FELICITACIONES! 🥳</p>
+            <strong>
+            <p id="nombreParticipante"></p>
             <p id="primerApellidoParticipante"></p>
             <p id="segundoApellidoParticipante"></p>
+        </strong>
         </div>
     </div>
 </div>
+<div class="modal" id="modalGanador" tabindex="-1" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-body">
+            <p>¡GANADOR!</p>
+            <strong>
+                <p id="nombreGanador"></p>
+                <p id="primerApellidoGanador"></p>
+                <p id="segundoApellidoGanador"></p>
+            </strong>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Cédula No Válida -->
 <div class="modal" id="modalCedulaInvalida" tabindex="-1" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-body">
-                <p>La cédula ingresada no es correcta. 😢</p>
+                <p>No eres el ganador, lo sentimos 😢</p>
             </div>
         </div>
     </div>
@@ -403,7 +422,7 @@
                 }
             },
             error: function() {
-                alert('Error al obtener la pista.');
+                alert('Se acabaron las pistas.');
             }
         });
     }
@@ -414,7 +433,7 @@
             type: 'GET',
             success: function(pistas) {
                 var tablaPistas = $('#tablaPistas tbody');
-                tablaPistas.empty(); // Limpiar la tabla antes de agregar nuevas filas
+                tablaPistas.empty(); 
 
                 pistas.forEach(function(pista) {
                     tablaPistas.append('<tr class="table-primary">' +
@@ -444,7 +463,7 @@
         url: '/conteo-pistas-reveladas/' + cedulaParticipante,
         type: 'GET',
         success: function(conteo) {
-            $('#conteoPistas').text(conteo); // Actualiza el texto del elemento con el ID 'conteoPistas'
+            $('#conteoPistas').text(conteo); 
         },
         error: function() {
             alert('Error al actualizar el contador de pistas.');
@@ -465,10 +484,11 @@
                 modal.style.display = "none";
             }
         }
+        
 
-        document.getElementById('formCedula').addEventListener('submit', function(event){
+    document.getElementById('formCedula').addEventListener('submit', function(event){
         event.preventDefault();
-        var cedula = document.getElementById('cedulaInput').value;
+        var cedula  = document.getElementById('cedulaInput').value;
 
         // Realiza la solicitud AJAX
         $.ajax({
@@ -479,21 +499,21 @@
             _token: '{{ csrf_token() }}' // Agrega el token CSRF aquí
         },
         success: function(response) {
+
         if (response.esValido) {
-            console.log("Nombre: " + response.nombre);
+            console.log("Nombre: " + response.p_nombre);
             console.log("Primer apellido: " + response.p_apellido);
             console.log("Segundo apellido: " + response.s_apellido);
-                    // Si la cédula es válida, muestra el modal correspondiente
-
-                    $('#nombreParticipante').text( response.nombre);
+            
+                    $('#nombreParticipante').text( response.p_nombre);
                     $('#primerApellidoParticipante').text(response.p_apellido);
                     $('#segundoApellidoParticipante').text(response.s_apellido);
-                    $('#modalCedula').modal('hide'); // Oculta el modal actual
-                    $('#modalCedulaValida').modal('show'); // Muestra el modal de cédula válida
+                    $('#modalCedula').modal('hide'); 
+                    $('#modalCedulaValida').modal('show'); 
                 } else {
-                    // Si la cédula no es válida, muestra el otro modal
-                    $('#modalCedula').modal('hide'); // Oculta el modal actual
-                    $('#modalCedulaInvalida').modal('show'); // Muestra el modal de cédula no válida
+
+                    $('#modalCedula').modal('hide');
+                    $('#modalCedulaInvalida').modal('show');
                 }
             },
             error: function() {

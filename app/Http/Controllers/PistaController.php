@@ -25,7 +25,7 @@ class PistaController extends Controller
         // Pista 2: Agencia
         $this->createPista($participante->cedula, 'Agencia', $participante->agencia);
         // Pista 3: Ciudad
-        $this->createPista($participante->cedula, 'Ciudad', $participante->ciudad);
+        $this->createPista($participante->cedula, 'Ciudad de residencia', $participante->ciudad);
         // Pista 4: Género
         $this->createPista($participante->cedula, 'Género', $participante->genero);
         // Pista 5: Departamento
@@ -33,6 +33,7 @@ class PistaController extends Controller
         // Pista 6: Sumatoria
         $sumatoria = array_sum(str_split(str_replace(['-', ' '], '', $participante->f_nacimiento)));
         $this->createPista($participante->cedula, 'Σ de los digitos de la fecha de nacimiento', $sumatoria);
+        
         $sumatoriaTelefono = array_sum(str_split($participante->telefono));
         $this->createPista($participante->cedula, 'Sumatoria de los digitos del Celular', $sumatoriaTelefono);
         // Pista: Último dígito de la cédula
@@ -42,15 +43,24 @@ class PistaController extends Controller
         $ultimoDigitoTelefono = substr($participante->telefono, -1);
         $this->createPista($participante->cedula, 'Último Dígito del Celular', $ultimoDigitoTelefono);
         // Pista: Última letra del nombre
-        $ultimaLetraNombre = substr($participante->nombre, -1);
-        $this->createPista($participante->cedula, 'Última Letra del Nombre', $ultimaLetraNombre);
+        $ultimaLetraNombre = substr($participante->p_nombre, -1);
+        $this->createPista($participante->cedula, 'Última Letra del Primer Nombre', $ultimaLetraNombre);
+        // Pista: Última letra del nombre
+        if ($participante->s_nombre !== null) {
+            $ultimaLetraSNombre = substr($participante->s_nombre, -1);
+            $this->createPista($participante->cedula, 'Última Letra del Segundo Nombre', $ultimaLetraSNombre);
+        }
         // Pista: Última letra del primer apellido
         $ultimaLetraPApellido = substr($participante->p_apellido, -1);
-        $this->createPista($participante->cedula, 'Última Letra Primer del Apellido', $ultimaLetraPApellido);
+        $this->createPista($participante->cedula, 'Última Letra del Primer Apellido', $ultimaLetraPApellido);
         // Pista: Última letra del segundo apellido
-        $ultimaLetraSApellido = substr($participante->s_apellido, -1);
-        $this->createPista($participante->cedula, 'Última Letra Segundo del Apellido', $ultimaLetraSApellido);
+        if ($participante->s_apellido !== null) {
+            $ultimaLetraSApellido = substr($participante->s_apellido, -1);
+            $this->createPista($participante->cedula, 'Última Letra del Segundo Apellido', $ultimaLetraSApellido);
+        }
     }
+
+
 
     private function createPista($cedula, $titulo, $dato)
     {
@@ -131,21 +141,35 @@ class PistaController extends Controller
         if ($participante) {
             return response()->json([
                 'esValido' => true, 
-                'nombre' => $participante->nombre,
-                'p_apellido' => $participante->p_apellido, // Agregar primer apellido
-                's_apellido' => $participante->s_apellido  // Agregar segundo apellido
+                'nombre' => $participante->p_nombre,
+                'p_apellido' => $participante->p_apellido, 
+                's_apellido' => $participante->s_apellido
             ]);
         } else {
             return response()->json(['esValido' => false]);
         }
     }
     
-
+    
     public function conteoPistasReveladas($cedula)
     {
         $conteo = Pista::where('fk_cedula', $cedula)->where('estado', 1)->count();
         return response()->json($conteo);
     }
 
+    public function obtenerGanador($cedula)
+    {
+        $participante = Participante::where('cedula', $cedula)->first();
 
+        if ($participante) {
+            return response()->json([
+                'esValido' => true, 
+                'nombre' => $participante->p_nombre,
+                'p_apellido' => $participante->p_apellido,
+                's_apellido' => $participante->s_apellido
+            ]);
+        } else {
+            return response()->json(['esValido' => false]);
+        }
+    }
 }
