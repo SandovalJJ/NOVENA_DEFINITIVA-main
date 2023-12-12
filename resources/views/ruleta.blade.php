@@ -308,18 +308,6 @@
         </div>
     </div>
 </div>
-<div class="modal" id="modalGanador" tabindex="-1" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-body">
-            <p>¡GANADOR!</p>
-            <strong>
-                <p id="nombreGanador"></p>
-                <p id="primerApellidoGanador"></p>
-                <p id="segundoApellidoGanador"></p>
-            </strong>
-        </div>
-    </div>
-</div>
 
 <!-- Modal Cédula No Válida -->
 <div class="modal" id="modalCedulaInvalida" tabindex="-1" aria-hidden="true">
@@ -511,7 +499,7 @@
                     $('#modalCedula').modal('hide'); 
                     $('#modalCedulaValida').modal('show'); 
                 } else {
-
+                    
                     $('#modalCedula').modal('hide');
                     $('#modalCedulaInvalida').modal('show');
                 }

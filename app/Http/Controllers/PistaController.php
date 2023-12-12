@@ -92,8 +92,6 @@ class PistaController extends Controller
         return $meses[$numeroMes] ?? 'Mes Desconocido';
     }
 
-
-
     public function mostrarRuleta($cedula)
     {
         $conteoGanadores = Participante::where('estado', 1)->count();
@@ -141,7 +139,7 @@ class PistaController extends Controller
         if ($participante) {
             return response()->json([
                 'esValido' => true, 
-                'nombre' => $participante->p_nombre,
+                'p_nombre' => $participante->p_nombre,
                 'p_apellido' => $participante->p_apellido, 
                 's_apellido' => $participante->s_apellido
             ]);
@@ -150,26 +148,12 @@ class PistaController extends Controller
         }
     }
     
-    
+
     public function conteoPistasReveladas($cedula)
     {
         $conteo = Pista::where('fk_cedula', $cedula)->where('estado', 1)->count();
         return response()->json($conteo);
     }
 
-    public function obtenerGanador($cedula)
-    {
-        $participante = Participante::where('cedula', $cedula)->first();
 
-        if ($participante) {
-            return response()->json([
-                'esValido' => true, 
-                'nombre' => $participante->p_nombre,
-                'p_apellido' => $participante->p_apellido,
-                's_apellido' => $participante->s_apellido
-            ]);
-        } else {
-            return response()->json(['esValido' => false]);
-        }
-    }
 }
